@@ -8,8 +8,14 @@ contract challengeMe {
     uint stake;                         // the stake for a goal
     
         modifier ifGoalTooBig{
-        require(utfStringLength(goal) < 20);
+        require(utfStringLength(goal) < 2);
         _;
+    }
+    
+    function testGoal(string testGoal)public returns(string){
+        goal = testGoal;
+        
+        return (goal);
     }
     
     function setGoal(string myGoal, uint myStake)public payable ifGoalTooBig returns(string, uint){
@@ -22,7 +28,7 @@ contract challengeMe {
     
     function utfStringLength(string _mygoal) constant returns (uint length){
         uint i=0;
-        bytes memory string_rep = bytes(goal);
+        bytes memory string_rep = bytes(testGoal(goal));
 
         while (i<string_rep.length)
         {
