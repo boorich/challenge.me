@@ -6,19 +6,20 @@ contract challengeMe {
     address challenger;                 // the one who challenges an owner
     string goal;                        // the goal (restricted to 200 characters)
     uint stake;                         // the stake for a goal
+    uint balance;                       // balance of the contract
     
         modifier ifGoalTooBig{
-        require(utfStringLength(goal) < 2);
+        require (utfStringLength(goal) < 5);
         _;
     }
     
-    function testGoal(string testGoal)public returns(string){
+    function testGoal(string testGoal) private returns(string){
         goal = testGoal;
         
         return (goal);
     }
     
-    function setGoal(string myGoal, uint myStake)public payable ifGoalTooBig returns(string, uint){
+    function setGoal(string myGoal, uint myStake)public payable returns(string, uint){
         goal = myGoal;
         stake = myStake;
         
@@ -51,4 +52,12 @@ contract challengeMe {
     function getGoal() constant ifGoalTooBig public returns (string, uint){
         return (goal, stake);
     }
+    
+    function getDetails() constant public returns (address){
+    return (address(this));
+    }
+    
+    function getEthBalance(address _addr) constant returns(uint) {
+    return _addr.balance;
+}
 }
